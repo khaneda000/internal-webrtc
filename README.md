@@ -1,6 +1,7 @@
 # internai-webrtc
 
-> An electron-vue project
+> An electron-vue project, created by simulatedgreg/electron-vue
+> % vue init simulatedgreg/electron-vue InternalWebRTC
 
 #### Build Setup
 
@@ -22,6 +23,10 @@ npm test
 npm run lint
 
 ```
+
+##### UI
+
+> Element-UI
 
 ---
 
