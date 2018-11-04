@@ -11,6 +11,21 @@ export default new Router({
       component: require('@/components/Root').default
     },
     {
+      path: '/input-user',
+      name: 'input-user',
+      component: require('@/components/pages/InputUserPage').default
+    },
+    {
+      path: '/input-room-id-page',
+      name: 'input-room-id-page',
+      component: require('@/components/pages/InputRoomIdPage').default
+    },
+    {
+      path: '/room-page',
+      name: 'room-page',
+      component: require('@/components/pages/RoomPage').default
+    },
+    {
       path: '*',
       redirect: '/'
     }
