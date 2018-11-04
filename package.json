@@ -58,6 +58,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.4.9",
+    "skyway-js": "^1.1.17",
     "sleep-async": "^1.0.5",
     "vee-validate": "^2.1.2",
     "vue": "^2.5.16",

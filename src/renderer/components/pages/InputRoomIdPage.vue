@@ -10,6 +10,8 @@
         RoomIdを英数字で入力してください<br/>（スペース不可）
       </p>
       <el-button @click="register" class="success-btn" type="success" :disabled="errors.any() || !isValidated">決定</el-button>
+      <!-- <el-button @click="randumRegister" class="random-btn" type="info">ランダムなIDで入室</el-button> -->
+      <a href="#" class="random-link">ランダムなIDで入室</a>
     </div>
   </div>
 </template>
@@ -45,7 +47,9 @@
         this.$validator.validateAll().then((result) => {
           if (!result) {
             alert(this.errors.all())
+            return
           }
+          this.$router.push({ name: 'room-page' })
         })
       }
     }
@@ -100,6 +104,12 @@
   
   .success-btn {
     width: 100%;
+    margin-bottom: 20px !important;
+  }
+
+  .random-link{
+    font-size: 0.8em;
+    color: darkgray;
   }
   
   .alert-danger {

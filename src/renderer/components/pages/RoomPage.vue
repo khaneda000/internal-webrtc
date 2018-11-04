@@ -14,6 +14,7 @@
     components: {
     },
     data () {
+      return {}
     },
     computed: {
       ...mapGetters({
@@ -34,6 +35,10 @@
 
   .aside{
     position: relative;
+  }
+
+  .el-main{
+    background-color:gray;
   }
 
 </style>
