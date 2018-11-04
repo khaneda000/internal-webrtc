@@ -1,7 +1,6 @@
 <template>
-  <div>
+  <div style="height:100%;">
     <LoadingContainer />
-    <el-button @click='openLink();'>Default</el-button>
   </div>
 </template>
 
@@ -12,19 +11,25 @@
     name: 'root',
     created () {
     },
+    mounted () {
+      const routing = () => {
+        if (this.$store.authname === '') {
+          this.$router.push({ name: 'input-user' })
+        } else {
+          this.$router.push({ name: 'input-room-id-page' })
+        }
+      }
+      const delayRun = (waitSeconds, someFunction) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(someFunction())
+          }, waitSeconds)
+        })
+      }
+      delayRun(3000, routing)
+    },
     components: {
       LoadingContainer
-    },
-    methods: {
-      openLink: function () {
-        console.log('click')
-        this.$router.push({ name: 'input-user' })
-      }
-    },
-    data () {
-      return {
-        loading: true
-      }
     }
   }
 </script>
