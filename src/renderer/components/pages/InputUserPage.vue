@@ -45,7 +45,8 @@
   import Vue from 'vue'
   import TutorialContainer from '../molecules/TutorialContainer.vue'
   import VeeValidate from 'vee-validate'
-
+  import { mapState } from 'vuex'
+  
   Vue.use(VeeValidate)
 
   export default {
@@ -59,9 +60,17 @@
       }
     },
     computed: {
+      ...mapState({
+        savedName: state => state.auth.name,
+        savedDepartment: state => state.auth.department
+      }),
       isValidated () {
         return this.name && this.department
       }
+    },
+    mounted () {
+      this.name = this.savedName
+      this.department = this.savedDepartment
     },
     methods: {
       register () {
@@ -70,7 +79,15 @@
             alert(this.errors.all())
             return
           }
-          alert('Hello, ' + this.accounts)
+
+          this.$confirm('「' + this.name + '-' + this.department + '」 ルーム内でこの様に表示されます、よろしいですか？（後から変更も可能です）', '確認', {
+            confirmButtonText: 'OK',
+            cancelButtonText: 'Cancel'
+          }).then(() => {
+            this.$store.dispatch('registUserInfo', { name: this.name, department: this.department })
+            this.$router.push({ name: 'input-room-id-page' })
+          }).catch(() => {
+          })
         })
       }
     }
@@ -92,7 +109,7 @@
   }
 
   .logo{
-    height: 50px;
+    height: 40px;
   }
 
   .form{
@@ -101,7 +118,7 @@
     left: 0;
     right: 0;
     width: 250px;
-    height: 150px;
+    height: 250px;
     text-align: center;
     position: absolute;
     margin: auto;
@@ -109,6 +126,7 @@
 
   .description{
     margin: 15px;
+    font-size: 0.8em;
     color: darkgrey;
   }
 

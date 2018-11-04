@@ -1,16 +1,110 @@
 <template>
   <div>
+    <div class='form'>
+      <img src="../../assets/logo.png" class="logo" />
+      <div class='description'>入室するRoomIdを入力してください</div>
+      <div class='display-name'>表示名: {{ userPeerId }}</div>
+      <el-input :class="'room-id'" name="name-id" type="text" v-validate="'required|alpha_dash'" placeholder="ルームID" v-model="roomId" clearable>
+      </el-input>
+      <p v-if="errors.has('name-id')" class="alert-danger">
+        RoomIdを英数字で入力してください<br/>（スペース不可）
+      </p>
+      <el-button @click="register" class="success-btn" type="success" :disabled="errors.any() || !isValidated">決定</el-button>
+    </div>
   </div>
 </template>
-<script>
-export default {
-  name: 'update-page',
-  created () {
-  },
-  components: {
+
+<script lang="ts">
+  import Vue from 'vue'
+  import VeeValidate from 'vee-validate'
+  import {
+    mapState, mapGetters
+  } from 'vuex'
+  
+  Vue.use(VeeValidate)
+  
+  export default {
+    components: {},
+    data () {
+      return {
+        roomId: ''
+      }
+    },
+    computed: {
+      ...mapState({}),
+      ...mapGetters({
+        userPeerId: 'userPeerId'
+      }),
+      isValidated () {
+        return this.roomId
+      }
+    },
+    mounted () {},
+    methods: {
+      register () {
+        this.$validator.validateAll().then((result) => {
+          if (!result) {
+            alert(this.errors.all())
+          }
+        })
+      }
+    }
   }
-}
 </script>
 
 <style>
+  .container {
+    height: 100%;
+  }
+  
+  .aside {
+    position: relative;
+  }
+  
+  .el-main {
+    height: 100%;
+    padding: 0px !important;
+  }
+  
+  .logo {
+    height: 40px;
+  }
+  
+  .form {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 250px;
+    height: 250px;
+    text-align: center;
+    position: absolute;
+    margin: auto;
+  }
+  
+  .description {
+    margin: 15px;
+    font-size: 0.8em;
+    color: darkgrey;
+  }
+
+  .display-name{
+    margin: 15px;
+    font-size: 0.8em;
+    color: burlywood;
+  }
+  
+  .room-id {
+    margin-bottom: 10px;
+  }
+  
+  .success-btn {
+    width: 100%;
+  }
+  
+  .alert-danger {
+    font-size: 0.7em;
+    color: brown;
+  }
 </style>
+
