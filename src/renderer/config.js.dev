@@ -1,0 +1,2 @@
+// neet to copy to config.js
+export const SKYWAY_API_KEY = ''

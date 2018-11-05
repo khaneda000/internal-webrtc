@@ -1,5 +1,18 @@
 <template>
   <div>
+    <div class="setting-form">
+      <el-popover
+        placement="top"
+        width="160"
+        v-model="visibleModal">
+        <p>登録されたユーザー情報を変更しますか？</p>
+        <div style="text-align: right; margin: 0">
+          <el-button size="mini" type="text" @click="visibleModal = false">しない</el-button>
+          <el-button type="primary" size="mini" @click="backToInputUser()">する</el-button>
+        </div>
+        <i class="el-icon-warning setting" slot="reference"/>
+      </el-popover>
+    </div>
     <div class='form'>
       <img src="../../assets/logo.png" class="logo" />
       <div class='description'>入室するRoomIdを入力してください</div>
@@ -29,6 +42,7 @@
     components: {},
     data () {
       return {
+        visibleModal: false,
         roomId: ''
       }
     },
@@ -51,6 +65,10 @@
           }
           this.$router.push({ name: 'room-page' })
         })
+      },
+      backToInputUser () {
+        this.visibleModal = false
+        this.$router.push({ name: 'input-user' })
       }
     }
   }
@@ -115,6 +133,16 @@
   .alert-danger {
     font-size: 0.7em;
     color: brown;
+  }
+
+  .setting-form{
+    position: absolute;
+    right: 0px;
+    margin: 10px;  
+  }
+
+  .setting{
+    color: darkgray;
   }
 </style>
 

@@ -32,7 +32,7 @@
           @click="register" 
           class="success-btn" 
           type="success" 
-          :disabled="errors.any() || !isValidated">決定</el-button>
+          :disabled="errors.any() || !isValidated">{{ enterBtnName }}</el-button>
       </div>
     </el-aside>
     <el-main>
@@ -56,7 +56,8 @@
     data () {
       return {
         name: '',
-        department: ''
+        department: '',
+        enterBtnName: '決定'
       }
     },
     computed: {
@@ -71,6 +72,9 @@
     mounted () {
       this.name = this.savedName
       this.department = this.savedDepartment
+      if (this.savedName !== '') {
+        this.enterBtnName = '更新'
+      }
     },
     methods: {
       register () {
