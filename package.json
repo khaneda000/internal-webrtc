@@ -15,8 +15,8 @@
     "lint": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter src test",
     "lint:fix": "eslint --ext .js,.vue -f ./node_modules/eslint-friendly-formatter --fix src test",
     "pack": "npm run pack:main && npm run pack:renderer",
-    "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
-    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
+    "pack:main": "cross-env NODE_ENV=production webpack  --progress --colors --config .electron-vue/webpack.main.config.js",
+    "pack:renderer": "cross-env NODE_ENV=production webpack --display-modules --display-error-details  --progress --colors --config .electron-vue/webpack.renderer.config.js",
     "test": "npm run unit && npm run e2e",
     "unit": "karma start test/unit/karma.conf.js",
     "postinstall": "npm run lint:fix"
@@ -56,8 +56,11 @@
     }
   },
   "dependencies": {
+    "async": "^2.6.1",
     "axios": "^0.18.0",
     "element-ui": "^2.4.9",
+    "moment": "^2.22.2",
+    "momentjs": "^2.0.0",
     "skyway-js": "^1.1.17",
     "sleep-async": "^1.0.5",
     "vee-validate": "^2.1.2",

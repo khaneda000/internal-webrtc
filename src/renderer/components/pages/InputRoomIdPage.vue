@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
   import Vue from 'vue'
   import VeeValidate from 'vee-validate'
   import {
@@ -47,7 +47,8 @@
       }
     },
     computed: {
-      ...mapState({}),
+      ...mapState({
+      }),
       ...mapGetters({
         userPeerId: 'userPeerId'
       }),
@@ -58,11 +59,13 @@
     mounted () {},
     methods: {
       register () {
+        var self = this
         this.$validator.validateAll().then((result) => {
           if (!result) {
             alert(this.errors.all())
             return
           }
+          this.$store.dispatch('updateEnterRoom', { roomId: self.roomId })
           this.$router.push({ name: 'room-page' })
         })
       },
@@ -86,10 +89,6 @@
   .el-main {
     height: 100%;
     padding: 0px !important;
-  }
-  
-  .logo {
-    height: 40px;
   }
   
   .form {

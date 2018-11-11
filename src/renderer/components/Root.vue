@@ -13,7 +13,8 @@
     },
     mounted () {
       const routing = () => {
-        if (this.$store.authname === '') {
+        this.$store.dispatch('initUser')
+        if (!this.$store.authname || this.$store.authname === '') {
           this.$router.push({ name: 'input-user' })
         } else {
           this.$router.push({ name: 'input-room-id-page' })

@@ -13,7 +13,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
   import TutorialContent from './TutorialContent.vue'
   export default {
     components: {
@@ -69,11 +69,11 @@
   }
 
   .el-carousel__item:nth-child(2n) {
-    background-color: #5285FF;
+    background-color: #189F96;
   }
 
   .el-carousel__item:nth-child(2n+1) {
-    background-color: #5285FF;
+    background-color: #189F96;
   }
 </style>
 

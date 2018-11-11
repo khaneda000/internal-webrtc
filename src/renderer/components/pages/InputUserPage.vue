@@ -3,7 +3,7 @@
     <el-aside class='aside'>
       <div class='form'>
         <img src="../../assets/logo.png" class="logo"/>
-        <div class='description'>ユーザー情報の入力</div>
+        <!-- <div class='description'>ユーザー情報の入力</div> -->
         <el-input 
           :class="'name'"
           name="name-input" 
@@ -41,7 +41,7 @@
   </el-container>
 </template>
 
-<script lang="ts">
+<script>
   import Vue from 'vue'
   import TutorialContainer from '../molecules/TutorialContainer.vue'
   import VeeValidate from 'vee-validate'
@@ -72,8 +72,11 @@
     mounted () {
       this.name = this.savedName
       this.department = this.savedDepartment
-      if (this.savedName !== '') {
+      console.log('mouted', this.saveName)
+      if (this.saveName && this.savedName !== '') {
         this.enterBtnName = '更新'
+      } else {
+        this.enterBtnName = '決定'
       }
     },
     methods: {
@@ -84,7 +87,7 @@
             return
           }
 
-          this.$confirm('「' + this.name + '-' + this.department + '」 ルーム内でこの様に表示されます、よろしいですか？（後から変更も可能です）', '確認', {
+          this.$confirm('「' + this.name + '/' + this.department + '」 ルーム内でこの様に表示されます、よろしいですか？（後から変更も可能です）', '確認', {
             confirmButtonText: 'OK',
             cancelButtonText: 'Cancel'
           }).then(() => {
@@ -113,7 +116,7 @@
   }
 
   .logo{
-    height: 40px;
+    height: 90px;
   }
 
   .form{
@@ -135,7 +138,7 @@
   }
 
   .name{
-    margin-bottom: 10px;
+    margin: 20px 0 10px 0;
   }
 
   .department{

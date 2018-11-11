@@ -22,7 +22,14 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 563,
     useContentSize: true,
-    width: 1000
+    width: 1060,
+    resizable: false,
+    frame: false,
+    transparent: true
+    // 'transparent': true, // ウィンドウの背景を透過
+    // 'frame': false, // 枠の無いウィンドウ
+    // 'resizable': false, // ウィンドウのリサイズを禁止
+    // 'show': false // アプリ起動時にウィンドウを表示しない
   })
 
   mainWindow.loadURL(winURL)
