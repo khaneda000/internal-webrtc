@@ -3,7 +3,7 @@
     <el-carousel class="el-carousel" 
       :autoplay="false"
       height="100%">
-      <el-carousel-item v-for="tutorial in tutorialContents" :key="tutorial">
+      <el-carousel-item v-for="tutorial in tutorialContents" :key="tutorial.title">
         <tutorial-content
           :icon="tutorial.icon" 
           :title="tutorial.title" 

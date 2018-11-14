@@ -1,5 +1,5 @@
 {
-  "name": "internai-webrtc",
+  "name": "Confrerre",
   "version": "0.0.1",
   "author": "Kentarou Haneda <kentaro.haneda@rarejob.co.jp>",
   "description": "An electron-vue project",
@@ -22,7 +22,7 @@
     "postinstall": "npm run lint:fix"
   },
   "build": {
-    "productName": "internai-webrtc",
+    "productName": "Confrerre",
     "appId": "com.example.yourapp",
     "directories": {
       "output": "build"

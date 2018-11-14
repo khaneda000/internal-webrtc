@@ -1,6 +1,14 @@
 import Peer from 'skyway-js'
 
 export default class SkyWay {
+  static ROOM_OPTION = {
+    audioBandwidth: 50,
+    videoBandwidth: 250,
+    videoCodec: 'H264',
+    videoReceiveEnabled: true,
+    audioReceiveEnabled: true
+  }
+
   constructor (apikey) {
     this.apikey = apikey
     this.peer = null
@@ -19,6 +27,6 @@ export default class SkyWay {
       {
         mode: 'sfu',
         stream: stream
-      })
+      }, this.ROOM_OPTION)
   }
 }

@@ -15,8 +15,8 @@
     </div>
     <div class='form'>
       <img src="../../assets/logo.png" class="logo" />
-      <div class='description'>入室するRoomIdを入力してください</div>
-      <div class='display-name'>表示名: {{ userPeerId }}</div>
+      <div class='description'>{{ userPeerId }}さん、入室するルームIDを<br/>入力してください</div>
+      <!-- <div class='display-name'>あなたのルーム内での表示名: {{ userPeerId }}</div> -->
       <el-input :class="'room-id'" name="name-id" type="text" v-validate="'required|alpha_dash'" placeholder="ルームID" v-model="roomId" clearable>
       </el-input>
       <p v-if="errors.has('name-id')" class="alert-danger">
@@ -24,7 +24,7 @@
       </p>
       <el-button @click="register" class="success-btn" type="success" :disabled="errors.any() || !isValidated">決定</el-button>
       <!-- <el-button @click="randumRegister" class="random-btn" type="info">ランダムなIDで入室</el-button> -->
-      <a href="#" class="random-link">ランダムなIDで入室</a>
+      <a href="#" @click="randomRegister()" class="random-link">ランダムなIDで入室</a>
     </div>
   </div>
 </template>
@@ -35,7 +35,8 @@
   import {
     mapState, mapGetters
   } from 'vuex'
-  
+  import mixin from '../../mixin'
+  Vue.mixin(mixin)
   Vue.use(VeeValidate)
   
   export default {
@@ -59,15 +60,19 @@
     mounted () {},
     methods: {
       register () {
-        var self = this
         this.$validator.validateAll().then((result) => {
           if (!result) {
             alert(this.errors.all())
             return
           }
-          this.$store.dispatch('updateEnterRoom', { roomId: self.roomId })
+          this.$store.dispatch('updateEnterRoom', { roomId: this.roomId })
           this.$router.push({ name: 'room-page' })
         })
+      },
+      randomRegister () {
+        var roomId = this.randomRoomId()
+        this.$store.dispatch('updateEnterRoom', { roomId: roomId })
+        this.$router.push({ name: 'room-page' })
       },
       backToInputUser () {
         this.visibleModal = false

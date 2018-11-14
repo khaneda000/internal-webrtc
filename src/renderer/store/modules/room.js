@@ -2,12 +2,10 @@ export default {
   namespace: 'room',
   state: {
     roomId: '',
-    streams: [],
     chats: []
   },
   mutations: {
     init (state) {
-      state.streams = []
       state.chats = []
     },
     setRoomId (state, payload) {

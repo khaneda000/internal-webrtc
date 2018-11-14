@@ -6,7 +6,7 @@
     <el-main>
       <div id="video-container">
         <div class="room-id-header">
-          <span class="room-id-header"> ルームID: {{ this.roomId }}</span>
+          <span class="room-id-header"> ルームID: {{ this.roomId }} / {{ this.memberCount }}人</span>
           <el-popover
             placement="top"
             width="160"
@@ -19,7 +19,6 @@
             <i class="el-icon-warning setting" slot="reference"/>
           </el-popover>
         </div>
-        <!-- <video id="local-video" muted="true" autoplay playsinline class="loacl-video"></video> -->
         <div class="video-main-container">
           <MainVideoContainer :stream="mainStream"/>
         </div>
@@ -31,8 +30,6 @@
 
 <script lang="js">
   import { mapGetters, mapState } from 'vuex'
-  // import Peer from 'skyway-js'
-  // import { SKYWAY_API_KEY } from '../../config.js'
   import MainVideoContainer from '../molecules/MainVideoContainer'
   import VideoListContainer from '../molecules/VideoListContainer'
   import ChatContainer from '../molecules/ChatContainer'
@@ -49,7 +46,8 @@
         localStream: null,
         mainStream: null,
         streams: [],
-        skyway: this.$store.getters.skyway
+        skyway: this.$store.getters.skyway,
+        memberCount: 0
       }
     },
     computed: {
@@ -70,30 +68,47 @@
         this.mainStream = stream
       },
       exitRoom () {
-        this.skyway.peer.destroy()
+        this.clearSkyway()
         this.$router.go(-1)
       },
+      clearSkyway () {
+        this.localStream.stop()
+        this.mainStream.stop()
+        this.streams.forEach((stream) => {
+          stream.getTracks().forEach((track) => {
+            track.stop()
+          })
+        })
+        this.skyway.peer.disconnect()
+        this.skyway.peer.destroy()
+        this.skyway.peer = null
+        this.skyway.room = null
+        this.streams = []
+      },
       setupPeerCallback (peer) {
-        var self = this
         peer.on('open', () => {
           console.log('Success open', peer.id)
-          self.setupLoaclStream()
+          this.setupLoaclStream()
         })
         peer.on('error', err => {
           console.log('Error skyway', err)
         })
       },
       setupLoaclStream () {
-        var self = this
         navigator.mediaDevices.getUserMedia({video: true, audio: true})
-          .then(function (stream) {
-            if (!self.localStream) {
-              self.localStream = stream
-              self.mainStream = stream
+          .then((stream) => {
+            if (!this.localStream) {
+              stream.stop = function () {
+                stream.getTracks().forEach((track) => {
+                  track.stop()
+                })
+              }
+              this.localStream = stream
+              this.mainStream = stream
               console.log('add local stream')
-              self.streams.push(stream)
-              self.skyway.setupRoom(self.roomId, stream)
-              self.setupRoomCallback(self.skyway.room)
+              this.streams.push(stream)
+              this.skyway.setupRoom(this.roomId, stream)
+              this.setupRoomCallback(this.skyway.room)
             }
           }).catch(function (error) {
             console.error('mediaDevice.getUserMedia() error:', error)
@@ -101,10 +116,9 @@
       },
       setupRoomCallback (room) {
         console.log('setup room callback', room)
-        var self = this
-        room.on('stream', stream => {
+        room.on('stream', (stream) => {
           console.log('stream add', stream.peerId)
-          self.streams.push(stream)
+          this.streams.push(stream)
         })
         room.on('removeStream', stream => {
           console.log('stream remove!!!')
@@ -112,13 +126,13 @@
         room.on('close', stream => {
           console.log('stream close!!!')
         })
-        room.on('peerLeave', peerId => {
-          console.log('current peerLeave!!!', self.streams)
+        room.on('peerLeave', (peerId) => {
+          console.log('current peerLeave!!!', this.streams)
           console.log('stream peerLeave!!!', peerId)
-          self.streams = self.streams.filter(function (stream, index) {
+          this.streams = this.streams.filter(function (stream, index) {
             return stream.peerId !== peerId
           })
-          console.log('current peerLeave!!!', self.streams)
+          console.log('current peerLeave!!!', this.streams)
         })
         room.on('peerJoin', peerId => {
           console.log('join new peer!!!', peerId)

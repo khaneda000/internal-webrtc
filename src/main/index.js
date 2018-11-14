@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, session } from 'electron'
 
 /**
  * Set `__static` path to static files in production
@@ -16,6 +16,12 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function createWindow () {
+  if (process.env.NODE_ENV === 'production') {
+    session.defaultSession.webRequest.onBeforeSendHeaders((details, c) => {
+      details.requestHeaders['Origin'] = 'electron://localhost'
+      c({ancel: false, requestHeaders: details.requestHeaders})
+    })
+  }
   /**
    * Initial window options
    */
@@ -23,17 +29,13 @@ function createWindow () {
     height: 563,
     useContentSize: true,
     width: 1060,
-    resizable: false,
+    // resizable: false,
     frame: false,
     transparent: true
-    // 'transparent': true, // ウィンドウの背景を透過
-    // 'frame': false, // 枠の無いウィンドウ
-    // 'resizable': false, // ウィンドウのリサイズを禁止
-    // 'show': false // アプリ起動時にウィンドウを表示しない
   })
 
   mainWindow.loadURL(winURL)
-
+  // mainWindow.webContents.openDevTools()
   mainWindow.on('closed', () => {
     mainWindow = null
   })

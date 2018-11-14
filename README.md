@@ -1,4 +1,4 @@
-# internai-webrtc
+# Confrerre
 
 > An electron-vue project, created by simulatedgreg/electron-vue
 > % vue init simulatedgreg/electron-vue InternalWebRTC
@@ -35,8 +35,21 @@ This project was generated with [electron-vue](https://github.com/SimulatedGREG/
 
 #### issues
 
+- [x] selfをアロー演算子にしてなくす
+- [x] 退出時にカメラを外す
+- [x] ランダムなIDで入室
+- [x] 画質制限
+- [ ] カメラ利用するかどうかを聞く
+- [ ] ルームの入室人数を表示
+- [ ] チャット着信時の通知と効果音
+- [ ] 入室退出を表示
+- [ ] 画面共有
+
+
+#### ハマった
+
 - npm run buildでエラー
-    - 作り直してみる
+    - scriptでtsを指定しているのが原因だった
 
 ```
     ERROR in unknown: Unexpected token (14946:4)
@@ -49,3 +62,11 @@ This project was generated with [electron-vue](https://github.com/SimulatedGREG/
         [2] (webpack)/buildin/module.js 497 bytes {0} [built]
 ```
 
+- ビルド後にレイアウトがおかしいし、ローディング後に何も出ない
+    - prodでローカルでビルドしてみる
+        - process.env.NODE_ENV = 'production'を入れてみる
+        - 普通に動いた
+    - warningを一通り消す
+        - ダメ
+    - index.dev.jsのdebug系の表示系をいろいろindex.jsに入れてみる
+        - production時のindex.ejsでのcss読み込みがおかしかった
