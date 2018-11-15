@@ -62,6 +62,7 @@
     "moment": "^2.22.2",
     "momentjs": "^2.0.0",
     "skyway-js": "^1.1.17",
+    "skyway-screenshare": "https://github.com/skyway/skyway-screenshare",
     "sleep-async": "^1.0.5",
     "vee-validate": "^2.1.2",
     "vue": "^2.5.16",

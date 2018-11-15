@@ -8190,6 +8190,10 @@ skyway-js@^1.1.17:
     sdp-transform "^2.3.0"
     socket.io-client "^2.0.3"
 
+"skyway-screenshare@https://github.com/skyway/skyway-screenshare":
+  version "1.0.1"
+  resolved "https://github.com/skyway/skyway-screenshare#5ec3c93f4ca0e2aa8d30882d0c52c7f92834ca8b"
+
 slack-node@~0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/slack-node/-/slack-node-0.2.0.tgz#de4b8dddaa8b793f61dbd2938104fdabf37dfa30"

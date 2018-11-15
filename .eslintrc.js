@@ -8,6 +8,9 @@ module.exports = {
     browser: true,
     node: true
   },
+  globals: {
+    ScreenShare: true
+  },
   extends: 'standard',
   globals: {
     __static: true

@@ -2,7 +2,9 @@ export default {
   namespace: 'room',
   state: {
     roomId: '',
-    chats: []
+    chats: [],
+    useCamera: true,
+    showSettingModal: false
   },
   mutations: {
     init (state) {
@@ -18,6 +20,15 @@ export default {
         message: payload.message
       }
       state.chats.push(chat)
+    },
+    updateUseCamera (state, playload) {
+      state.useCamera = playload.useCamera
+    },
+    openSettingModal (state) {
+      state.showSettingModal = true
+    },
+    hideSettingModal (state) {
+      state.showSettingModal = false
     }
   },
   actions: {
@@ -29,6 +40,9 @@ export default {
     },
     addChat (context, payload) {
       context.commit('addChat', payload)
+    },
+    updateUseCamera (context, payload) {
+      context.commit('updateUseCamera', payload)
     }
   }
 }

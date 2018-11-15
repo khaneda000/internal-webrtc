@@ -48,6 +48,24 @@ This project was generated with [electron-vue](https://github.com/SimulatedGREG/
 
 #### ハマった
 
+- screen share 一旦無理っぽい
+
+```
+      this.screenShare = window.ScreenShare.create({debug: true})
+      console.log('enable screenshare', this.screenShare.isScreenShareAvailable())
+
+      this.screenshare.start({
+        width: 600,
+        height: 400,
+        frameRate: 24
+      }).then(function (stream) {
+        console.log('success screen share')
+      }).catch(function (error) {
+        console.log('error screen share', error)
+      })
+
+```
+
 - npm run buildでエラー
     - scriptでtsを指定しているのが原因だった
 

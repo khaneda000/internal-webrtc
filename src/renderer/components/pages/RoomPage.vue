@@ -33,6 +33,8 @@
   import MainVideoContainer from '../molecules/MainVideoContainer'
   import VideoListContainer from '../molecules/VideoListContainer'
   import ChatContainer from '../molecules/ChatContainer'
+  // import { ScreenShare } from '../../venders/screenshare'
+  // import { ScreenShare } from 'skyway-screenshare'
 
   export default {
     components: {
@@ -47,7 +49,8 @@
         mainStream: null,
         streams: [],
         skyway: this.$store.getters.skyway,
-        memberCount: 0
+        memberCount: 0,
+        screenShare: {}
       }
     },
     computed: {
@@ -62,6 +65,8 @@
       this.$store.dispatch('init')
       this.skyway.setupPeer()
       this.setupPeerCallback(this.skyway.peer)
+    },
+    created () {
     },
     methods: {
       clickListVideo (index, stream) {

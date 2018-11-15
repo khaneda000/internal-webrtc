@@ -1,6 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow, session } from 'electron'
+import path from 'path'
 
 /**
  * Set `__static` path to static files in production
@@ -22,16 +23,23 @@ function createWindow () {
       c({ancel: false, requestHeaders: details.requestHeaders})
     })
   }
+
+  var extensionDir = path.join(__static, '/chrome-extension')
+  console.log('extension Dir', extensionDir)
+
+  // BrowserWindow.addDevToolsExtension('/Users/kentaro.haneda/Library/Application Support/Google/Chrome/Default/Extensions/blpcfgokakmgnkcojhhkbfbldkacnbeo/4.2.8_0/')
+  BrowserWindow.addDevToolsExtension(extensionDir)
+
   /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
     height: 563,
     useContentSize: true,
-    width: 1060,
+    width: 1060
     // resizable: false,
-    frame: false,
-    transparent: true
+    // frame: false,
+    // transparent: true
   })
 
   mainWindow.loadURL(winURL)

@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="setting-form">
-      <el-popover
+      <el-button class="el-icon-warning setting" type="text" @click="openSettingModal()"></el-button>
+      <!-- <el-popover
         placement="top"
         width="160"
         v-model="visibleModal">
@@ -11,7 +12,8 @@
           <el-button type="primary" size="mini" @click="backToInputUser()">する</el-button>
         </div>
         <i class="el-icon-warning setting" slot="reference"/>
-      </el-popover>
+      </el-popover> -->
+      <SettingDialog  />
     </div>
     <div class='form'>
       <img src="../../assets/logo.png" class="logo" />
@@ -33,18 +35,22 @@
   import Vue from 'vue'
   import VeeValidate from 'vee-validate'
   import {
-    mapState, mapGetters
+    mapState, mapGetters, mapMutations
   } from 'vuex'
   import mixin from '../../mixin'
+  import SettingDialog from '../molecules/SettingDialog.vue'
   Vue.mixin(mixin)
   Vue.use(VeeValidate)
   
   export default {
-    components: {},
+    components: {
+      SettingDialog
+    },
     data () {
       return {
         visibleModal: false,
-        roomId: ''
+        roomId: '',
+        useCamera: true
       }
     },
     computed: {
@@ -59,6 +65,9 @@
     },
     mounted () {},
     methods: {
+      ...mapMutations({
+        openSettingModal: 'openSettingModal'
+      }),
       register () {
         this.$validator.validateAll().then((result) => {
           if (!result) {
