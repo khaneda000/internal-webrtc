@@ -39,7 +39,9 @@ This project was generated with [electron-vue](https://github.com/SimulatedGREG/
 - [x] 退出時にカメラを外す
 - [x] ランダムなIDで入室
 - [x] 画質制限
-- [ ] カメラ利用するかどうかを聞く
+- 入室設定
+    - [ ] カメラ利用するかどうかを聞く
+    - [ ] 画質
 - [ ] ルームの入室人数を表示
 - [ ] チャット着信時の通知と効果音
 - [ ] 入室退出を表示

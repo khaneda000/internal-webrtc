@@ -4,10 +4,18 @@
   :showClose="false"
   @open="open"
   :visible.sync="visible">
-    <el-switch v-model="useCamera"></el-switch>
+    <el-select v-model="selected.videoQuality" placeholder="映像の質">
+      <el-option
+        v-for="item in videoQualitys"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
+    <el-switch v-model="selected.useCamera"></el-switch>
     <span slot="footer" class="dialog-footer">
       <el-button @click="hideSettingModal()">閉じる</el-button>
-      <el-button type="info" @click="updateSetting()">決定</el-button>
+      <el-button type="info" @click="update()">決定</el-button>
     </span>
   </el-dialog>
 </template>
@@ -16,6 +24,7 @@
   import {
     mapState, mapMutations
   } from 'vuex'
+  import Define from '../../define.js'
 
   export default {
     name: 'setting-dialog',
@@ -23,28 +32,52 @@
     },
     methods: {
       ...mapMutations({
-        updateUseCamera: 'updateUseCamera',
+        updateSetting: 'updateSetting',
         hideSettingModal: 'hideSettingModal'
       }),
-      updateSetting () {
-        this.updateUseCamera({useCamera: this.useCamera})
+      update () {
+        this.updateSetting(
+          {
+            useCamera: this.selected.useCamera,
+            videoQuality: this.selected.videoQuality
+          }
+        )
         this.hideSettingModal()
       },
       open () {
-        this.useCamera = this.savedUseCamera
+        this.selected.useCamera = this.savedUseCamera
+        this.selected.VideoQuality = this.savedVideoQuality
       }
     },
     computed: {
       ...mapState({
         visible: state => state.room.showSettingModal,
-        savedUseCamera: state => state.room.useCamera
+        savedUseCamera: state => state.room.useCamera,
+        savedVideoQuality: state => state.room.videoQuality
       })
     },
     data () {
       return {
-        useCamera: this.savedUseCamera,
         formLabelWidth: '100px',
-        showClose: false
+        showClose: false,
+        selected: {
+          useCamera: this.savedUseCamera,
+          videoQuality: Define.VIDEO_QUAITY.AUTO
+        },
+        videoQualitys: [
+          {
+            value: Define.VIDEO_QUAITY.AUTO,
+            label: '自動'
+          },
+          {
+            value: Define.VIDEO_QUAITY.LOW,
+            label: '低'
+          },
+          {
+            value: Define.VIDEO_QUAITY.HIGH,
+            label: '高'
+          }
+        ]
       }
     }
   }

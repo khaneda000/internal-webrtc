@@ -112,7 +112,7 @@
               this.mainStream = stream
               console.log('add local stream')
               this.streams.push(stream)
-              this.skyway.setupRoom(this.roomId, stream)
+              this.skyway.setupRoom(this.roomId, stream, this.$store.audioBandWidth, this.$store.videoBandWidth)
               this.setupRoomCallback(this.skyway.room)
             }
           }).catch(function (error) {

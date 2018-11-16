@@ -1,10 +1,29 @@
+import Define from '../../define'
+
 export default {
   namespace: 'room',
   state: {
     roomId: '',
     chats: [],
+    showSettingModal: false,
     useCamera: true,
-    showSettingModal: false
+    videoQuality: Define.VIDEO_QUAITY.AUTO
+  },
+  getters: {
+    videoBandWidth: state => {
+      switch (state.videoQuality) {
+        case Define.VIDEO_QUAITY.LOW: return 100
+        case Define.VIDEO_QUAITY.HIGH: return 250
+        default: return 200
+      }
+    },
+    audioBandWidth: state => {
+      switch (state.videoQuality) {
+        case Define.VIDEO_QUAITY.LOW: return 50
+        case Define.VIDEO_QUAITY.HIGH: return 150
+        default: return 100
+      }
+    }
   },
   mutations: {
     init (state) {
@@ -21,8 +40,9 @@ export default {
       }
       state.chats.push(chat)
     },
-    updateUseCamera (state, playload) {
+    updateSetting (state, playload) {
       state.useCamera = playload.useCamera
+      state.videoQuality = playload.videoQuality
     },
     openSettingModal (state) {
       state.showSettingModal = true
