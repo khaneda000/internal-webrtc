@@ -25,7 +25,7 @@ export default class SkyWay {
   setupRoom (roomId, stream, audioBandwidth, videoBandwidth) {
     console.log('setup room')
     console.log('audio video', audioBandwidth, videoBandwidth)
-    this.room = this.peer.joinRoom(roomId,
+    this.room = this.peer.joinRoom('test--' + roomId,
       {
         mode: 'sfu',
         stream: stream

@@ -1,18 +1,7 @@
 <template>
   <div>
     <div class="setting-form">
-      <el-button class="el-icon-warning setting" type="text" @click="openSettingModal()"></el-button>
-      <!-- <el-popover
-        placement="top"
-        width="160"
-        v-model="visibleModal">
-        <p>登録されたユーザー情報を変更しますか？</p>
-        <div style="text-align: right; margin: 0">
-          <el-button size="mini" type="text" @click="visibleModal = false">しない</el-button>
-          <el-button type="primary" size="mini" @click="backToInputUser()">する</el-button>
-        </div>
-        <i class="el-icon-warning setting" slot="reference"/>
-      </el-popover> -->
+      <el-button class="setting" type="info" icon="el-icon-setting" @click="openSettingModal()" circle></el-button>
       <SettingDialog  />
     </div>
     <div class='form'>
@@ -39,6 +28,7 @@
   } from 'vuex'
   import mixin from '../../mixin'
   import SettingDialog from '../molecules/SettingDialog.vue'
+  // import { ipcRenderer } from 'electron'
   Vue.mixin(mixin)
   Vue.use(VeeValidate)
   
@@ -63,7 +53,9 @@
         return this.roomId
       }
     },
-    mounted () {},
+    mounted () {
+      // ipcRenderer.send('send-notification')
+    },
     methods: {
       ...mapMutations({
         openSettingModal: 'openSettingModal'
@@ -148,14 +140,14 @@
     color: brown;
   }
 
-  .setting-form{
+  .setting-form .setting{
     position: absolute;
+    bottom: 10px;
+    right: 10px;
     right: 0px;
-    margin: 10px;  
+    margin: 10px 10px 0 0;
   }
 
-  .setting{
-    color: darkgray;
-  }
+
 </style>
 

@@ -27,7 +27,7 @@
           }, waitSeconds)
         })
       }
-      delayRun(3000, routing)
+      delayRun(5000, routing)
     },
     components: {
       LoadingContainer

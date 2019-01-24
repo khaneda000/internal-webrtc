@@ -1,7 +1,8 @@
 'use strict'
 
-import { app, BrowserWindow, session } from 'electron'
+import { app, BrowserWindow, session, ipcMain } from 'electron'
 import path from 'path'
+import nodeNotifier from 'node-notifier'
 
 /**
  * Set `__static` path to static files in production
@@ -36,10 +37,10 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     height: 563,
     useContentSize: true,
-    width: 1060
-    // resizable: false,
-    // frame: false,
-    // transparent: true
+    width: 1060,
+    resizable: false,
+    frame: false,
+    transparent: true
   })
 
   mainWindow.loadURL(winURL)
@@ -61,6 +62,31 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+nodeNotifier.on('click', function (notifierObject, options) {
+  console.log('notification click')
+})
+
+nodeNotifier.on('timeout', function (notifierObject, options) {
+  console.log('notification timeout')
+})
+
+// call from renderer
+
+ipcMain.on('send-notification', (event, arg) => {
+  nodeNotifier.notify({
+    title: '入室',
+    message: 'wanwanさんが入りました',
+    icon: 'file://' + __static + '/img/icon.png',
+    contentImage: 'file://' + __static + '/img/icon.png'
+  }, function (err, response) {
+    console.log('error', err, response)
+  })
+
+  console.log(
+    event, arg
+  )
 })
 
 /**

@@ -61,6 +61,7 @@
     "element-ui": "^2.4.9",
     "moment": "^2.22.2",
     "momentjs": "^2.0.0",
+    "node-notifier": "^5.3.0",
     "skyway-js": "^1.1.17",
     "skyway-screenshare": "https://github.com/skyway/skyway-screenshare",
     "sleep-async": "^1.0.5",
